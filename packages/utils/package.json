@@ -1,7 +1,7 @@
 {
     "name": "@wiggindev/utils",
     "description": "Various utilities that I use in my projects",
-    "version": "0.2.4",
+    "version": "0.2.5",
     "author": {
         "name": "Andrew Wiggin",
         "email": "andrew@wiggin.dev",
