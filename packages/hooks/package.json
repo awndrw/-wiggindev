@@ -1,13 +1,17 @@
 {
     "name": "@wiggindev/hooks",
     "description": "Various hooks that I use in my projects",
-    "version": "0.2.2",
+    "version": "0.2.4",
     "author": {
         "name": "Andrew Wiggin",
         "email": "andrew@wiggin.dev",
         "url": "https://wiggin.dev"
     },
-    "repository": "git://github.com/wiggindev/hooks",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/wiggindev/-wiggindev.git",
+        "directory": "packages/hooks"
+    },
     "type": "module",
     "source": "src/index.ts",
     "exports": {
@@ -19,8 +23,8 @@
     "unpkg": "dist/index.umd.js",
     "types": "dist/index.d.ts",
     "scripts": {
-        "build": "rm -rf dist && microbundle",
-        "dev": "rm -rf dist && microbundle watch"
+        "build": "rm -rf dist && microbundle -f modern,esm,cjs",
+        "dev": "rm -rf dist && microbundle -f modern,esm,cjs watch"
     },
     "dependencies": {
         "@wiggindev/utils": "*"

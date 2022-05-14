@@ -1,13 +1,17 @@
 {
     "name": "@wiggindev/utils",
     "description": "Various utilities that I use in my projects",
-    "version": "0.2.6",
+    "version": "0.2.8",
     "author": {
         "name": "Andrew Wiggin",
         "email": "andrew@wiggin.dev",
         "url": "https://wiggin.dev"
     },
-    "repository": "git://github.com/wiggindev/utils",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/wiggindev/@wiggindev.git",
+        "directory": "packages/utils"
+    },
     "type": "module",
     "source": "src/index.ts",
     "exports": {

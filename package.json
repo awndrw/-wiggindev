@@ -13,7 +13,10 @@
         "postpack": "pinst --enable",
         "lint": "tsc --noEmit && eslint .",
         "format": "eslint --fix . && prettier --write .",
-        "publish": "yarn workspaces foreach --exclude @wiggindev npm publish --tolerate-republish"
+        "foreach": "yarn workspaces foreach --exclude @wiggindev",
+        "version:patch": "yarn foreach -- version patch",
+        "publish": "yarn foreach -- npm publish --tolerate-republish",
+        "patch": "yarn lint && yarn build && yarn format && yarn version:patch && yarn publish"
     },
     "devDependencies": {
         "@types/eslint": "^8",
