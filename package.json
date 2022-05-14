@@ -1,5 +1,6 @@
 {
     "name": "@wiggindev",
+    "private": true,
     "packageManager": "yarn@3.2.1",
     "workspaces": [
         "packages/*"
@@ -11,7 +12,8 @@
         "prepack": "pinst --disable",
         "postpack": "pinst --enable",
         "lint": "tsc --noEmit && eslint .",
-        "format": "eslint --fix . && prettier --write ."
+        "format": "eslint --fix . && prettier --write .",
+        "publish": "yarn workspaces foreach --exclude @wiggindev npm publish --tolerate-republish"
     },
     "devDependencies": {
         "@types/eslint": "^8",
@@ -22,7 +24,6 @@
         "eslint": "^8.15.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-prettier": "^4.0.0",
-        "eslint-plugin-react": "^7.29.4",
         "husky": "^8.0.1",
         "lint-staged": "^12.4.1",
         "pinst": "^3.0.0",

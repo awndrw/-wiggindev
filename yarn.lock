@@ -1843,7 +1843,9 @@ __metadata:
   dependencies:
     "@types/react": ^18.0.9
     "@wiggindev/utils": "*"
+    eslint-plugin-react: ^7.29.4
     microbundle: ^0.15.0
+    react: ^18.1.0
   peerDependencies:
     react: ">= 18"
   languageName: unknown
@@ -1869,7 +1871,6 @@ __metadata:
     eslint: ^8.15.0
     eslint-config-prettier: ^8.5.0
     eslint-plugin-prettier: ^4.0.0
-    eslint-plugin-react: ^7.29.4
     husky: ^8.0.1
     lint-staged: ^12.4.1
     pinst: ^3.0.0
@@ -4318,7 +4319,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loose-envify@npm:^1.4.0":
+"loose-envify@npm:^1.1.0, loose-envify@npm:^1.4.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
   dependencies:
@@ -5524,6 +5525,15 @@ __metadata:
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: f7a19ac3496de32ca9ae12aa030f00f14a3d45374f1ceca0af707c831b2a6098ef0d6bdae51bd437b0a306d7f01d4677fcc8de7c0d331eb47ad0f46130e53c5f
+  languageName: node
+  linkType: hard
+
+"react@npm:^18.1.0":
+  version: 18.1.0
+  resolution: "react@npm:18.1.0"
+  dependencies:
+    loose-envify: ^1.1.0
+  checksum: 5bb296b561b43ef2220395da4faac86c14a087c8c80e1a7598a5740f01ee605c11eaf249985c1e2000971c4cd32ccb46d40f00479bbd9fb6b1c7cf857393b7d4
   languageName: node
   linkType: hard
 

@@ -1,7 +1,7 @@
 {
     "name": "@wiggindev/hooks",
     "description": "Various hooks that I use in my projects",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "author": {
         "name": "Andrew Wiggin",
         "email": "andrew@wiggin.dev",
@@ -30,7 +30,9 @@
     },
     "devDependencies": {
         "@types/react": "^18.0.9",
-        "microbundle": "^0.15.0"
+        "eslint-plugin-react": "^7.29.4",
+        "microbundle": "^0.15.0",
+        "react": "^18.1.0"
     },
     "packageManager": "yarn@3.2.1",
     "publishConfig": {
