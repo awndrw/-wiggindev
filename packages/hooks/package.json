@@ -1,0 +1,40 @@
+{
+    "name": "@wiggindev/hooks",
+    "description": "Various hooks that I use in my projects",
+    "version": "0.2.0",
+    "author": {
+        "name": "Andrew Wiggin",
+        "email": "andrew@wiggin.dev",
+        "url": "https://wiggin.dev"
+    },
+    "repository": "git://github.com/wiggindev/hooks",
+    "type": "module",
+    "source": "src/index.ts",
+    "exports": {
+        "require": "./dist/index.cjs",
+        "default": "./dist/index.modern.js"
+    },
+    "main": "dist/index.cjs",
+    "module": "dist/index.module.js",
+    "unpkg": "dist/index.umd.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "rm -rf dist && microbundle",
+        "dev": "rm -rf dist && microbundle watch"
+    },
+    "dependencies": {
+        "@wiggindev/utils": "*"
+    },
+    "peerDependencies": {
+        "react": ">= 18"
+    },
+    "devDependencies": {
+        "@types/react": "^18.0.9",
+        "microbundle": "^0.15.0"
+    },
+    "packageManager": "yarn@3.2.1",
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org/"
+    }
+}
