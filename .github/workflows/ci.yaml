@@ -23,6 +23,7 @@ jobs:
               run: yarn build
 
     test:
+        needs: build
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
@@ -35,6 +36,7 @@ jobs:
               run: yarn test
 
     lint:
+        needs: build
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
