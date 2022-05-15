@@ -10,19 +10,29 @@ on:
             - requested
 
 jobs:
-    setup:
-        uses: ./.github/workflows/setup.yaml
-
-    test:
-        needs: setup
+    build:
         runs-on: ubuntu-latest
         steps:
+            - name: Setup
+              run: actions/setup@main
+
+            - name: Build
+              run: yarn build
+
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Setup
+              run: actions/setup@main
+
             - name: Test
               run: yarn test
 
     lint:
-        needs: setup
         runs-on: ubuntu-latest
         steps:
+            - name: Setup
+              run: actions/setup@main
+
             - name: Lint
               run: yarn lint

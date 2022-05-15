@@ -3,20 +3,18 @@ name: Publish
 on: workflow_dispatch
 
 jobs:
-    setup:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: ./setup.yaml
-
     ci:
         runs-on: ubuntu-latest
         steps:
             - uses: ./ci.yaml
 
     publish:
-        needs: [setup, ci]
+        needs: ci
         runs-on: ubuntu-latest
         steps:
+            - name: Setup
+              run: actions/setup@main
+
             - name: Publish utils
               id: publish-utils
               uses: JS-DevTools/npm-publish@v1
