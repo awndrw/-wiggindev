@@ -11,6 +11,10 @@ jobs:
         name: Publish
         needs: ci
         runs-on: ubuntu-latest
+        
+        env:
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+            GPR_TOKEN: ${{ github.token }}
 
         strategy:
             matrix:
@@ -23,10 +27,10 @@ jobs:
                 include:
                     - registry: npm
                       url: https://registry.npmjs.org
-                      token: ${{ secrets.NPM_TOKEN }}
+                      token: $NPM_TOKEN
                     - registry: gpr
                     - url: https://npm.pkg.github.com
-                      token: ${{ github.token }}
+                      token: $GPR_TOKEN
 
         steps:
             - name: Checkout
