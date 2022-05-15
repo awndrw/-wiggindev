@@ -4,13 +4,28 @@ on: workflow_dispatch
 
 jobs:
     ci:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: ./ci.yaml
+        name: CI
+        uses: ./.github/workflows/ci.yaml
 
     publish:
+        name: Publish to NPM
         needs: ci
         runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                package:
+                    - utils
+                    - hooks
+                registry:
+                    - https://registry.npmjs.org
+                    - https://npm.pkg.github.com
+                include:
+                    - registry: https://registry.npmjs.org
+                      token: ${{ secrets.NPM_TOKEN }}
+                    - registry: https://npm.pkg.github.com
+                      token: ${{ github.token }}
+
         steps:
             - name: Checkout
               uses: actions/checkout@v3
@@ -18,18 +33,10 @@ jobs:
             - name: Setup
               uses: ./.github/actions/setup
 
-            - name: Publish utils
-              id: publish-utils
+            - name: Publish ${{ matrix.package }} to ${{ matrix.registry }}
               uses: JS-DevTools/npm-publish@v1
               with:
-                  token: ${{ secrets.NPM_TOKEN }}
-                  package: ./packages/utils/package.json
+                  token: ${{ matrix.token }}
+                  package: ./packages/${{ matrix.package }}/package.json
                   access: public
-
-            - name: Publish hooks
-              id: publish-hooks
-              uses: JS-DevTools/npm-publish@v1
-              with:
-                  token: ${{ secrets.NPM_TOKEN }}
-                  package: ./packages/hooks/package.json
-                  access: public
+                  registry: ${{ matrix.registry }}
