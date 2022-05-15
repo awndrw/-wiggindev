@@ -1,13 +1,8 @@
 name: CI
 
 on:
-    push:
-        branches:
-            - main
-    workflow_run:
-        workflows: ['Publish']
-        types:
-            - requested
+    - push
+    - workflow_call
 
 jobs:
     lint:
