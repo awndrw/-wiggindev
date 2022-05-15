@@ -12,6 +12,7 @@
         "prepack": "pinst --disable",
         "postpack": "pinst --enable",
         "lint": "tsc --noEmit && eslint .",
+        "test": "jest",
         "format": "eslint --fix . && prettier --write .",
         "foreach": "yarn workspaces foreach --exclude @wiggindev",
         "version:patch": "yarn foreach -- version patch",
@@ -19,7 +20,9 @@
         "patch": "yarn lint && yarn build && yarn format && yarn version:patch && yarn publish"
     },
     "devDependencies": {
+        "@jest/types": "^28.1.0",
         "@types/eslint": "^8",
+        "@types/jest": "^27.5.1",
         "@types/prettier": "^2",
         "@types/rimraf": "^3",
         "@typescript-eslint/eslint-plugin": "^5.23.0",
@@ -28,9 +31,16 @@
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-prettier": "^4.0.0",
         "husky": "^8.0.1",
+        "jest": "^28.1.0",
+        "jest-environment-jsdom": "^28.1.0",
         "lint-staged": "^12.4.1",
         "pinst": "^3.0.0",
         "prettier": "^2.6.2",
-        "typescript": "^4.6.4"
+        "ts-jest": "^28.0.2",
+        "ts-node": "^10.7.0",
+        "typescript": "4.4.4"
+    },
+    "dependencies": {
+        "@yarnpkg/pnpify": "^3.1.3"
     }
 }

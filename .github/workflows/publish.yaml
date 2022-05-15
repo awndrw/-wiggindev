@@ -1,33 +1,34 @@
-name: Lint
+name: Publish
 
-on: push
+on: workflow_dispatch
 
 jobs:
-    build:
+    setup:
         runs-on: ubuntu-latest
-
         steps:
-            - uses: actions/checkout@v3
+            - uses: ./setup.yaml
 
-            - name: Setup NodeJS (with NPM Registry)
-              uses: actions/setup-node@v3
+    ci:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: ./ci.yaml
+
+    publish:
+        needs: [setup, ci]
+        runs-on: ubuntu-latest
+        steps:
+            - name: Publish utils
+              id: publish-utils
+              uses: JS-DevTools/npm-publish@v1
               with:
-                  registry-url: 'https://registry.npmjs.org'
+                  token: ${{ secrets.NPM_TOKEN }}
+                  package: ./packages/utils/package.json
+                  access: public
 
-            - name: Install Dependencies
-            - run: yarn install --frozen-lockfile
-
-            - name: Publish to NPM
-            - run: yarn publish
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.YARN_TOKEN }}
-
-            - name: Setup NodeJS (with GH Registry)
-            - uses: actions/setup-node@v3
+            - name: Publish hooks
+              id: publish-hooks
+              uses: JS-DevTools/npm-publish@v1
               with:
-                  registry-url: 'https://npm.pkg.github.com'
-
-            - name: Publish to GHR
-            - run: yarn publish
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  token: ${{ secrets.NPM_TOKEN }}
+                  package: ./packages/hooks/package.json
+                  access: public

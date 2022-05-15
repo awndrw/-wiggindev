@@ -1,0 +1,30 @@
+name: CI
+
+on:
+    push:
+        branches:
+            - main
+    workflow_run:
+        workflows: ['Publish']
+        types:
+            - requested
+
+jobs:
+    setup:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: ./setup.yaml
+
+    test:
+        needs: setup
+        runs-on: ubuntu-latest
+        steps:
+            - name: Test
+              run: yarn test
+
+    lint:
+        needs: setup
+        runs-on: ubuntu-latest
+        steps:
+            - name: Lint
+              run: yarn lint
