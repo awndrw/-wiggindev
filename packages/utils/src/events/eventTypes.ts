@@ -1,4 +1,4 @@
-import { LiteralUnion } from '../types/LiteralUnion';
+import { LiteralUnion } from '../types';
 
 type EventMap = WindowEventMap | DocumentEventMap | HTMLElementEventMap;
 
