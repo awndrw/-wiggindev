@@ -17,6 +17,6 @@ runs:
           shell: bash
           run: |
               PATHS=(packages/*/)
-              DIRS=(${PATHS[@]:9:-1})
-              echo "$DIRS"
+              DIRS=(${PATHS[@]%/})
+              DIRS=(${DIRS[@]##*/})
               echo ::set-output name=packages::${DIRS}
