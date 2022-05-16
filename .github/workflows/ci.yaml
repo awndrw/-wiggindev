@@ -30,3 +30,34 @@ jobs:
 
             - name: Test
               run: yarn test
+
+    get-packages:
+        name: Get Packages
+        runs-on: ubuntu-latest
+        outputs:
+            packages: ${{ steps.get-packages.outputs.packages }}
+        steps:
+            - uses: actions/checkout@v3
+            - id: get-packages
+              uses: ./.github/actions/get-packages
+
+    tag:
+        name: Tag
+        needs: [lint, test, get-packages]
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                package: ${{ fromJSON(needs.get-packages.outputs.packages) }}
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 2
+
+            - name: Tag commit if version has changed
+              uses: salsify/action-detect-and-tag-new-version@v2
+              with:
+                  tag-template: ${{ matrix.package }}/v{{VERSION}}
+                  version-command: jq '.version' ./packages/${{ matrix.package }}/package.json
