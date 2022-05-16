@@ -93,4 +93,3 @@ jobs:
             - run: yarn workspace @wiggindev/${{ matrix.package }} npm publish --access public --tolerate-republish
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.GPR_TOKEN }}
-              shell: bash
