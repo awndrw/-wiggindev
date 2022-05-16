@@ -8,30 +8,18 @@ jobs:
         uses: ./.github/workflows/ci.yaml
 
     publish:
-        name: Publish
+        name: Publish to NPM
         needs: ci
         runs-on: ubuntu-latest
         
         env:
             NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-            GPR_TOKEN: ${{ github.token }}
 
         strategy:
             matrix:
                 package:
                     - utils
                     - hooks
-                registry:
-                    - npm
-                    - gpr
-                include:
-                    - registry: npm
-                      url: https://registry.npmjs.org
-                      token: $NPM_TOKEN
-                    - registry: gpr
-                      url: https://npm.pkg.github.com
-                      token: $GPR_TOKEN
-
         steps:
             - name: Checkout
               uses: actions/checkout@v3
@@ -39,15 +27,14 @@ jobs:
             - name: Setup
               uses: ./.github/actions/setup
 
-            - name: Publish ${{ matrix.package }} to ${{ matrix.registry }}
+            - name: Publish ${{ matrix.package }}
               id: publish
               uses: JS-DevTools/npm-publish@v1
               with:
-                  token: ${{ matrix.token }}
+                  token: ${{ $NPM_TOKEN }}
                   package: ./packages/${{ matrix.package }}/package.json
                   access: public
-                  registry: ${{ matrix.url }}
 
             - name: Check status
               run: |
-                  echo "${{ matrix.package }} version on ${{ matrix.registry }}: ${{ steps.publish.outputs.version }}"
+                  echo "${{ matrix.package }} version: ${{ steps.publish.outputs.version }}"
