@@ -14,9 +14,5 @@ runs:
 
         - name: Get contents
           id: get
-          shell: bash
-          run: |
-              PATHS=(packages/*/)
-              DIRS=(${PATHS[@]%/})
-              DIRS=(${DIRS[@]##*/})
-              echo ::set-output name=packages::${DIRS}
+          shell: python
+          run: import os, json; json.dumps(os.listdir('packages'))
