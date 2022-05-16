@@ -2,7 +2,7 @@ name: CI
 
 on:
     - push
-    - workflow_call
+    - workflow_dispatch
 
 jobs:
     get-packages:
@@ -63,7 +63,7 @@ jobs:
 
     publish:
         name: Publish
-        needs: [get-packages, tag]
+        needs: [get-packages, lint, test, tag]
         runs-on: ubuntu-latest
         strategy:
             matrix:
