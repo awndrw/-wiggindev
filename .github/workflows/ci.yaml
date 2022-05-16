@@ -57,7 +57,14 @@ jobs:
                   fetch-depth: 2
 
             - name: Tag commit if version has changed
+              id: tag
               uses: salsify/action-detect-and-tag-new-version@v2
               with:
                   tag-template: ${{ matrix.package }}/v{{VERSION}}
                   version-command: jq '.version' ./packages/${{ matrix.package }}/package.json
+
+            - name: Trigger deploy
+              if: ${{ steps.tag.tag !== '' }}
+              uses: ./.github/actions/publish
+              with:
+                  package: ${{ matrix.package }}

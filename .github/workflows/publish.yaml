@@ -1,6 +1,13 @@
 name: Publish
 
-on: workflow_dispatch
+on:
+    workflow_dispatch:
+    workflow_call:
+        inputs:
+            skip-ci:
+                type: boolean
+                default: false
+                required: false
 
 jobs:
     get-packages:
@@ -14,6 +21,7 @@ jobs:
               uses: ./.github/actions/get-packages
 
     ci:
+        if: ${{ inputs.skip-ci === false }}
         name: CI
         uses: ./.github/workflows/ci.yaml
 
