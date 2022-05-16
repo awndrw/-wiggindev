@@ -18,4 +18,4 @@ runs:
           run: |
               import os, json
               packages=json.dumps(os.listdir('packages'))
-              print(f"::set-output name=packages::{my_output}")
+              print(f"::set-output name=packages::{packages}")
