@@ -1,10 +1,16 @@
 name: Setup
 description: Setup repo
+inputs:
+    registry-url:
+        required: false
+        default: https://registry.npmjs.org
 runs:
     using: composite
     steps:
         - name: Setup NodeJS
           uses: actions/setup-node@v3
+          with:
+              registry-url: ${{ inputs.registry-url }}
 
         - name: Cache Deps
           uses: actions/cache@v3
@@ -15,7 +21,7 @@ runs:
         - name: Install Dependencies
           run: yarn install
           shell: bash
-          
+
         - name: Build
           run: yarn build
           shell: bash

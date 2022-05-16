@@ -60,28 +60,36 @@ jobs:
             - id: status
               run: echo "::set-output name=publish::${{ steps.tag.output.tag != '' }}"
 
-    publish:
-        name: Publish
-        needs: [get-packages, lint, test, tag]
+    publish-npm:
+        name: Publish to NPM
+        needs: [get-packages, test, tag]
         if: ${{ needs.tag.outputs.publish }}
         runs-on: ubuntu-latest
         strategy:
             matrix:
                 package: ${{ fromJSON(needs.get-packages.outputs.packages) }}
         steps:
-            - name: Checkout
-              uses: actions/checkout@v3
-            - name: Publish ${{ matrix.package }} to NPM
-              uses: JS-DevTools/npm-publish@v1
+            - uses: actions/checkout@v3
+            - uses: ./.github/actions/setup
               with:
-                  token: ${{ secrets.NPM_TOKEN }}
-                  package: ./packages/${{ matrix.package }}/package.json
-                  access: public
-                  registry: https://registry.npmjs.org
-            - name: Publish ${{ matrix.package }} to GPR
-              uses: JS-DevTools/npm-publish@v1
+                  registry-url: https://registry.npmjs.org
+            - run: yarn workspace @wiggindev/${{ matrix.package }} npm publish --access public --tolerate-republish
               with:
-                  token: ${{ secrets.GPR_TOKEN }}
-                  package: ./packages/${{ matrix.package }}/package.json
-                  access: public
-                  registry: https://npm.pkg.github.com
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    publish-gpr:
+        name: Publish to GPR
+        needs: [get-packages, test, tag]
+        if: ${{ needs.tag.outputs.publish }}
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                package: ${{ fromJSON(needs.get-packages.outputs.packages) }}
+        steps:
+            - uses: actions/checkout@v3
+            - uses: ./.github/actions/setup
+              with:
+                  registry-url: https://npm.pkg.github.com
+            - run: yarn workspace @wiggindev/${{ matrix.package }} npm publish --access public --tolerate-republish
+              with:
+                  NODE_AUTH_TOKEN: ${{ secrets.GPR_TOKEN }}
