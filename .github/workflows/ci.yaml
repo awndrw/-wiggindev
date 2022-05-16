@@ -64,7 +64,7 @@ jobs:
                   version-command: jq '.version' ./packages/${{ matrix.package }}/package.json
 
             - name: Trigger deploy
-              if: ${{ steps.tag.tag !== '' }}
+              if: ${{ steps.tag.tag != '' }}
               uses: ./.github/actions/publish
               with:
                   package: ${{ matrix.package }}
