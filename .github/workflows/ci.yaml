@@ -74,7 +74,7 @@ jobs:
               with:
                   registry-url: https://registry.npmjs.org
             - run: yarn workspace @wiggindev/${{ matrix.package }} npm publish --access public --tolerate-republish
-              with:
+              env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
     publish-gpr:
@@ -91,5 +91,5 @@ jobs:
               with:
                   registry-url: https://npm.pkg.github.com
             - run: yarn workspace @wiggindev/${{ matrix.package }} npm publish --access public --tolerate-republish
-              with:
+              env:
                   NODE_AUTH_TOKEN: ${{ secrets.GPR_TOKEN }}
