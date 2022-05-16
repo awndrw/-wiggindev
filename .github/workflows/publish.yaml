@@ -29,7 +29,7 @@ jobs:
                       url: https://registry.npmjs.org
                       token: $NPM_TOKEN
                     - registry: gpr
-                    - url: https://npm.pkg.github.com
+                      url: https://npm.pkg.github.com
                       token: $GPR_TOKEN
 
         steps:
