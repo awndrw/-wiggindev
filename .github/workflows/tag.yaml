@@ -22,7 +22,7 @@ jobs:
 
         strategy:
             matrix:
-                package: ${{ needs.get-packages.outputs.packages }}
+                package: ${{ fromJSON(needs.get-packages.outputs.packages) }}
 
         steps:
             - name: Checkout

@@ -15,4 +15,7 @@ runs:
         - name: Get contents
           id: get
           shell: python
-          run: import os, json; json.dumps(os.listdir('packages'))
+          run: |
+              import os, json
+              packages=json.dumps(os.listdir('packages'))
+              print(f"::set-output name=packages::{my_output}")
