@@ -15,7 +15,7 @@ runs:
               cache: 'yarn'
 
         - name: Install Dependencies
-          run: yarn install
+          run: yarn install --frozen-lockfile
           shell: bash
 
         - name: Build
