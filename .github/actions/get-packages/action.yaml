@@ -1,0 +1,22 @@
+name: Get Packages
+description: Gets the packages and returns them to use in a matrix
+
+outputs:
+    packages:
+        description: Array of packages
+        value: ${{ steps.get.outputs.packages }}
+
+runs:
+    using: composite
+    steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+
+        - name: Get contents
+          id: get
+          shell: bash
+          run: |
+              PATHS=(packages/*/)
+              DIRS=(${PATHS[@]:9:-1})
+              echo "$DIRS"
+              echo ::set-output name=packages::${DIRS}

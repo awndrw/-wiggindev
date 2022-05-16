@@ -1,0 +1,40 @@
+name: Tag
+
+on: push
+
+jobs:
+    get-packages:
+        name: Get Packages
+        runs-on: ubuntu-latest
+        outputs:
+            packages: ${{ steps.get-packages.outputs.packages }}
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - id: get-packages
+              uses: ./.github/actions/get-packages
+
+    tag:
+        name: Tag
+        needs: [get-packages]
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                package: ${{ needs.get-packages.outputs.packages }}
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 2
+
+            - name: CD to ${{ matrix.package }}
+              run: cd ./packages/${{ matrix.package }}
+              shell: bash
+
+            - name: Tag commit if version has changed
+              uses: salsify/action-detect-and-tag-new-version@v2
+              with:
+                  tag-template: ${{ matrix.package }}/v{{VERSION}}
