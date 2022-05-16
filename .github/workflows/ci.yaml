@@ -73,7 +73,7 @@ jobs:
             - uses: ./.github/actions/setup
               with:
                   registry-url: https://registry.npmjs.org
-            - run: yarn publish ./packages/${{ matrix.package }} --access public
+            - run: yarn workspace @wiggindev/${{ matrix.package }} npm publish --access public --tolerate-republish
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
