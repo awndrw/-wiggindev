@@ -1,7 +1,7 @@
 {
     "name": "@wiggindev/hooks",
     "description": "Various hooks that I use in my projects",
-    "version": "0.2.7",
+    "version": "0.2.8",
     "author": {
         "name": "Andrew Wiggin",
         "email": "andrew@wiggin.dev",
