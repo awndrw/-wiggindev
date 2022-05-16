@@ -11,12 +11,17 @@ runs:
           uses: actions/setup-node@v3
           with:
               registry-url: ${{ inputs.registry-url }}
+              
+        - name: Get yarn cache directory path
+          id: yarn-cache-dir-path
+          run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
 
-        - name: Cache Deps
+        - name: Cache deps
           uses: actions/cache@v3
           with:
-              path: '**/node_modules'
-              key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+              path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+              key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+              restore-keys: ${{ runner.os }}-yarn-
 
         - name: Install Dependencies
           run: yarn install
