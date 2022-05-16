@@ -11,10 +11,11 @@ runs:
           uses: actions/setup-node@v3
           with:
               registry-url: ${{ inputs.registry-url }}
-              
+
         - name: Get yarn cache directory path
           id: yarn-cache-dir-path
           run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+          shell: cwd
 
         - name: Cache deps
           uses: actions/cache@v3
@@ -25,8 +26,8 @@ runs:
 
         - name: Install Dependencies
           run: yarn install
-          shell: bash
+          shell: cwd
 
         - name: Build
           run: yarn build
-          shell: bash
+          shell: cwd
