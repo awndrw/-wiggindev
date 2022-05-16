@@ -17,5 +17,11 @@ runs:
           shell: python
           run: |
               import os, json
-              packages=json.dumps(os.listdir('packages'))
-              print(f"::set-output name=packages::{packages}")
+              packages=os.listdir('packages')
+              jsonPackages=json.dumps(packages)
+              print(f'::set-output name=packages::{jsonPackages}')
+              os.system('echo "## Packages Loaded" >> $GITHUB_STEP_SUMMARY')
+              os.system('echo "" >> $GITHUB_STEP_SUMMARY')
+              for package in packages:
+              os.system(f'echo "- {package}" >> $GITHUB_STEP_SUMMARY')
+              
