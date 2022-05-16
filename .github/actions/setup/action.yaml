@@ -14,8 +14,11 @@ runs:
               registry-url: ${{ inputs.registry-url }}
               cache: 'yarn'
 
-        - name: Set Yarn Version
-          run: yarn set version
+        - name: Enable Corepack
+          run: corepack enable
+          shell: bash
+          
+        - run: yarn -v
           shell: bash
 
         - name: Install Dependencies
