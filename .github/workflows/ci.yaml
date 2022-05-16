@@ -90,6 +90,6 @@ jobs:
             - uses: ./.github/actions/setup
               with:
                   registry-url: https://npm.pkg.github.com
-            - run: yarn workspace @wiggindev/${{ matrix.package }} publish --access public --tolerate-republish
+            - run: yarn workspace @wiggindev/${{ matrix.package }} npm publish --access public --tolerate-republish
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.GPR_TOKEN }}
