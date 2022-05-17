@@ -7,7 +7,7 @@ inputs:
         description: Registry URL
     node-version:
         required: false
-        default: '18'
+        default: 18.x
         description: Node Version
 runs:
     using: composite
@@ -17,7 +17,7 @@ runs:
           with:
               node-version: ${{ inputs.node-version }}
               registry-url: ${{ inputs.registry-url }}
-              cache: 'yarn'
+              cache: yarn
 
         - name: Enable Corepack and Check Node Version
           run: corepack enable && yarn -v
