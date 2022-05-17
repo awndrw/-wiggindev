@@ -37,12 +37,12 @@ jobs:
             - uses: ./.github/actions/setup-node
             - run: yarn workspace $PACKAGE version $VERSION
             - id: get-version
-              run: |
-                  version=jq '.version' ./packages/$DIR/package.json
-                  echo "::set-output name=version::{version}"
+              uses: martinbeentjes/npm-get-version-action@main
+              with:
+                  path: packages/$DIR
             - uses: rickstaa/action-create-tag@v1
               with:
-                  tag: $DIR_${{ steps.get-version.output.version }}
+                  tag: $DIR_${{ steps.get-version.outputs.current-version }}
 
     publish:
         name: Publish
