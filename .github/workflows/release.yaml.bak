@@ -6,7 +6,7 @@ on:
             package:
                 type: choice
                 description: which package should be released
-                options: ["events","hooks","utils"]
+                options: %%PACKAGES%%
                 required: true
             version:
                 type: choice
