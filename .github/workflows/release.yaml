@@ -25,7 +25,7 @@ env:
 
 jobs:
     ci:
-        uses: .github/workflows/ci.yaml
+        uses: ./.github/workflows/ci.yaml
 
     bump-version:
         name: Bump Version
