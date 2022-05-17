@@ -1,5 +1,5 @@
-name: Setup
-description: Setup repo
+name: Setup NodeJS
+description: Setup NodeJS
 inputs:
     registry-url:
         required: false
@@ -9,14 +9,12 @@ runs:
     using: composite
     steps:
         - name: Setup NodeJS
-          uses: ./.github/actions/setup-node
+          uses: actions/setup-node@v3
           with:
+              node-version: '18.x'
               registry-url: ${{ inputs.registry-url }}
+              cache: 'yarn'
 
-        - name: Install Dependencies
-          run: yarn install --immutable --immutable-cache
-          shell: bash
-
-        - name: Build
-          run: yarn build
+        - name: Enable Corepack and Check Node Version
+          run: corepack enable && yarn -v
           shell: bash
