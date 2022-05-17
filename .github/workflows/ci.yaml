@@ -70,7 +70,7 @@ jobs:
 
     tag:
         name: Tag
-        needs: [install]
+        needs: [install, build]
         runs-on: ubuntu-latest
         strategy:
             fail-fast: false
@@ -89,37 +89,3 @@ jobs:
                   version-command: jq '.version' ./packages/${{ matrix.package }}/package.json
             - id: status
               run: echo "::set-output name=publish::${{ steps.tag.output.tag != '' }}"
-
-    publish-npm:
-        name: Publish to NPM
-        needs: [install, tag]
-        if: ${{ needs.tag.outputs.publish }}
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                package: ${{ fromJSON(needs.install.outputs.packages) }}
-        steps:
-            - uses: actions/checkout@v3
-            - uses: ./.github/actions/setup
-              with:
-                  registry-url: https://registry.npmjs.org
-            - run: yarn workspace @wiggindev/${{ matrix.package }} npm publish --access public --tolerate-republish
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-    publish-gpr:
-        name: Publish to GPR
-        needs: [install, tag]
-        if: ${{ needs.tag.outputs.publish }}
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                package: ${{ fromJSON(needs.install.outputs.packages) }}
-        steps:
-            - uses: actions/checkout@v3
-            - uses: ./.github/actions/setup
-              with:
-                  registry-url: https://npm.pkg.github.com
-            - run: yarn workspace @wiggindev/${{ matrix.package }} npm publish --access public --tolerate-republish
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.GPR_TOKEN }}
