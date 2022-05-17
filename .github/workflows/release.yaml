@@ -39,10 +39,10 @@ jobs:
             - id: get-version
               uses: martinbeentjes/npm-get-version-action@main
               with:
-                  path: packages/$DIR
+                  path: './packages/${{ github.event.inputs.package }}'
             - uses: rickstaa/action-create-tag@v1
               with:
-                  tag: $DIR_${{ steps.get-version.outputs.current-version }}
+                  tag: '${{ github.event.inputs.package }}_${{ steps.get-version.outputs.current-version }}'
 
     publish:
         name: Publish
