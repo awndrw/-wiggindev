@@ -45,8 +45,8 @@ jobs:
                   tag: '${{ github.event.inputs.package }}_${{ steps.get-version.outputs.current-version }}'
                   force_push_tag: true
 
-    publish:
-        name: Publish
+    publish-to-npm:
+        name: Publish to NPM
         needs: bump-version
         runs-on: ubuntu-latest
         steps:
@@ -57,5 +57,21 @@ jobs:
             - uses: JS-DevTools/npm-publish@v1
               with:
                   token: ${{ secrets.NPM_TOKEN }}
+                  package: './packages/${{ github.event.inputs.package }}/package.json'
+                  access: public
+
+    publish-to-gpr:
+        name: Publish to GPR
+        needs: bump-version
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: ./.github/actions/setup-node
+              with:
+                  registry-url: https://npm.pkg.github.com
+            - uses: JS-DevTools/npm-publish@v1
+              with:
+                  registry: https://npm.pkg.github.com
+                  token: ${{ secrets.GPR_TOKEN }}
                   package: './packages/${{ github.event.inputs.package }}/package.json'
                   access: public
