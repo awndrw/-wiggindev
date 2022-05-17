@@ -20,12 +20,12 @@ on:
                 required: true
 
 env:
-    DIR: ${{ github.event.inputs.package }}
     PACKAGE: '@wiggindev/${{ github.event.inputs.package }}'
     VERSION: ${{ github.event.inputs.version }}
 
 jobs:
     ci:
+        name: CI
         uses: ./.github/workflows/ci.yaml
 
     bump-version:
@@ -43,7 +43,6 @@ jobs:
             - uses: rickstaa/action-create-tag@v1
               with:
                   tag: '${{ github.event.inputs.package }}_${{ steps.get-version.outputs.current-version }}'
-                  force_push_tag: true
 
     publish-to-npm:
         name: Publish to NPM
