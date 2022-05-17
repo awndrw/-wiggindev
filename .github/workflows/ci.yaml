@@ -32,24 +32,8 @@ jobs:
             - uses: ./.github/actions/setup
             - run: yarn typecheck
 
-    test:
-        name: Test
-        needs: [install]
-        runs-on: ubuntu-latest
-        strategy:
-            fail-fast: false
-            matrix:
-                node-version: [14.x, 16.x, 18.x]
-                shard: ['1/2', '2/2']
-        steps:
-            - uses: actions/checkout@v3
-            - uses: ./.github/actions/setup
-              with:
-                  node-version: ${{ matrix.node-version }}
-            - run: yarn test -- --shard ${{ matrix.shard }}
-
     build:
-        name: Build
+        name: Build and test
         needs: [install]
         runs-on: ubuntu-latest
         strategy:
@@ -62,3 +46,4 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
             - run: yarn build
+            - run: yarn test
