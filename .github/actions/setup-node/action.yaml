@@ -5,13 +5,17 @@ inputs:
         required: false
         default: https://registry.npmjs.org
         description: Registry URL
+    node-version:
+        required: false
+        default: '18'
+        description: Node Version
 runs:
     using: composite
     steps:
         - name: Setup NodeJS
           uses: actions/setup-node@v3
           with:
-              node-version: '18.x'
+              node-version: ${{ inputs.node-version }}
               registry-url: ${{ inputs.registry-url }}
               cache: 'yarn'
 

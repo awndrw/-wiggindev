@@ -5,6 +5,10 @@ inputs:
         required: false
         default: https://registry.npmjs.org
         description: Registry URL
+    node-version:
+        required: false
+        default: '18'
+        description: Node Version
 runs:
     using: composite
     steps:
@@ -12,6 +16,7 @@ runs:
           uses: ./.github/actions/setup-node
           with:
               registry-url: ${{ inputs.registry-url }}
+              node-version: ${{ inputs.node-version }}
 
         - name: Install Dependencies
           run: yarn install --immutable --immutable-cache
