@@ -4,6 +4,7 @@ inputs:
     registry-url:
         required: false
         default: https://registry.npmjs.org
+        description: Registry URL
 runs:
     using: composite
     steps:
@@ -14,14 +15,6 @@ runs:
               registry-url: ${{ inputs.registry-url }}
               cache: 'yarn'
 
-        - name: Enable Corepack
-          run: corepack enable && yarn -v
-          shell: bash
-
         - name: Install Dependencies
-          run: yarn install --immutable --immutable-cache --check-cache
-          shell: bash
-
-        - name: Build
-          run: yarn build
+          run: yarn install --immutable --immutable-cache
           shell: bash

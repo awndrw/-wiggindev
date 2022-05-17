@@ -5,7 +5,7 @@ on:
     - workflow_dispatch
 
 jobs:
-    get-packages:
+    install:
         name: Get Packages
         runs-on: ubuntu-latest
         outputs:
@@ -15,31 +15,45 @@ jobs:
             - id: get-packages
               uses: ./.github/actions/get-packages
 
-    lint:
-        name: Lint
+    typecheck:
+        name: Typecheck
+        needs: install
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout
-              uses: actions/checkout@v3
-            - name: Setup
-              uses: ./.github/actions/setup
-            - name: Lint
-              run: yarn lint
+            - uses: actions/checkout@v3
+            - uses: ./.github/actions/setup
+            - run: yarn typecheck
+
+    lint:
+        name: Lint
+        needs: install
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: ./.github/actions/setup
+            - run: yarn link
 
     test:
         name: Test
+        needs: install
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout
-              uses: actions/checkout@v3
-            - name: Setup
-              uses: ./.github/actions/setup
-            - name: Test
-              run: yarn test
+            - uses: actions/checkout@v3
+            - uses: ./.github/actions/setup
+            - run: yarn test
+
+    build:
+        name: Build
+        needs: install
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: ./.github/actions/setup
+            - run: yarn build
 
     tag:
         name: Tag
-        needs: [lint, test, get-packages]
+        needs: install
         runs-on: ubuntu-latest
         strategy:
             matrix:
@@ -62,7 +76,7 @@ jobs:
 
     publish-npm:
         name: Publish to NPM
-        needs: [get-packages, test, tag]
+        needs: [install, tag]
         if: ${{ needs.tag.outputs.publish }}
         runs-on: ubuntu-latest
         strategy:
@@ -79,7 +93,7 @@ jobs:
 
     publish-gpr:
         name: Publish to GPR
-        needs: [get-packages, test, tag]
+        needs: [install, tag]
         if: ${{ needs.tag.outputs.publish }}
         runs-on: ubuntu-latest
         strategy:

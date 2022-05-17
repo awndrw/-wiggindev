@@ -12,6 +12,20 @@ runs:
         - name: Checkout
           uses: actions/checkout@v3
 
+        - name: Setup NodeJS
+          uses: actions/setup-node@v3
+          with:
+              node-version: '18.x'
+              cache: 'yarn'
+
+        - name: Install Dependencies
+          run: yarn install --immutable --immutable-cache --check-cache
+          shell: bash
+
+        - name: Enable Corepack
+          run: corepack enable && yarn -v
+          shell: bash
+
         - name: Get contents
           id: get
           shell: python
