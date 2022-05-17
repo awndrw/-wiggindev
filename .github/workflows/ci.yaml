@@ -33,7 +33,7 @@ jobs:
             - run: yarn typecheck
 
     build:
-        name: Build and test
+        name: Test
         needs: [install]
         runs-on: ubuntu-latest
         strategy:
@@ -45,5 +45,4 @@ jobs:
             - uses: ./.github/actions/setup
               with:
                   node-version: ${{ matrix.node-version }}
-            - run: yarn build
             - run: yarn test

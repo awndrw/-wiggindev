@@ -35,7 +35,7 @@ jobs:
         steps:
             - uses: actions/checkout@v3
             - uses: ./.github/actions/setup-node
-            - run: yarn workspace $PACKAGE version --$VERSION
+            - run: yarn workspace $PACKAGE version $VERSION
             - id: get-version
               run: |
                   version=jq '.version' ./packages/$DIR/package.json
