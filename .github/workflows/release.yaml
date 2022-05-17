@@ -19,43 +19,40 @@ on:
                     - major
                 required: true
 
+env:
+    DIR: ${{ github.event.inputs.package }}
+    PACKAGE: @wiggindev/$DIR
+    VERSION: ${{ github.event.inputs.version }}
+
 jobs:
     ci:
         uses: ./.github/workflows/ci.yaml
 
     bump-version:
-        name: Bump Version
+        name: Bump Version and Create Tag
         needs: ci
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
             - uses: ./.github/actions/setup-node
-            - run: yarn workspace @wiggindev/${{ inputs.package }} version --${{ inputs.version }}
-
-    create-tag:
-        name: Create Tag
-        needs: [ci, bump-version]
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - uses: ./.github/actions/setup-node
+            - run: yarn workspace $PACKAGE version --$VERSION
             - id: get-version
               run: |
-                  version=jq '.version' ./packages/${{ inputs.package }}/package.json
+                  version=jq '.version' ./packages/$DIR/package.json
                   echo "::set-output name=version::{version}"
             - uses: rickstaa/action-create-tag@v1
               with:
-                  tag: ${{ inputs.package }}_${{ steps.get-version.output.version }}
+                  tag: $DIR_${{ steps.get-version.output.version }}
 
     publish:
         name: Publish
-        needs: [ci, bump-version, create-tag]
+        needs: bump-version
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
             - uses: ./.github/actions/setup-node
               with:
                   registry-url: https://registry.npmjs.org
-            - run: yarn workspace @wiggindev/${{ inputs.package }} npm publish
+            - run: yarn workspace $PACKAGE npm publish
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
