@@ -1,6 +1,6 @@
-import { LiteralUnion } from '../types';
+import type { LiteralUnion } from '@wiggindev/utils';
 
-type EventMap = WindowEventMap | DocumentEventMap | HTMLElementEventMap;
+export type EventMap = WindowEventMap | DocumentEventMap | HTMLElementEventMap;
 
 export type EventName<M extends EventMap> = LiteralUnion<keyof M, string>;
 export type EventListener<M extends EventMap, N extends EventName<M>> = (

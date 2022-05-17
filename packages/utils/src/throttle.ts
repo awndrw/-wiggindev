@@ -1,10 +1,10 @@
-import { Callback } from './types';
+import { AnyFunction } from './types';
 
-type ThrottledFunction<C extends Callback> = (
+type ThrottledFunction<C extends AnyFunction> = (
     ...args: Parameters<C>
 ) => ReturnType<C>;
 
-export const throttle = <C extends Callback>(
+export const throttle = <C extends AnyFunction>(
     callback: C,
     limit: number
 ): ThrottledFunction<C> => {

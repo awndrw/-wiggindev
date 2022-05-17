@@ -21,6 +21,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:."\
       },\
       {\
+        "name": "@wiggindev/events",\
+        "reference": "workspace:packages/events"\
+      },\
+      {\
         "name": "@wiggindev/hooks",\
         "reference": "workspace:packages/hooks"\
       },\
@@ -32,6 +36,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     "enableTopLevelFallback": true,\
     "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
     "fallbackExclusionList": [\
+      ["@wiggindev/events", ["workspace:packages/events"]],\
       ["@wiggindev/hooks", ["workspace:packages/hooks"]],\
       ["@wiggindev/utils", ["workspace:packages/utils"]],\
       ["root-workspace-0b6124", ["workspace:."]]\
@@ -3841,12 +3846,24 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@wiggindev/events", [\
+        ["workspace:packages/events", {\
+          "packageLocation": "./packages/events/",\
+          "packageDependencies": [\
+            ["@wiggindev/events", "workspace:packages/events"],\
+            ["@wiggindev/utils", "workspace:packages/utils"],\
+            ["microbundle", "npm:0.15.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
       ["@wiggindev/hooks", [\
         ["workspace:packages/hooks", {\
           "packageLocation": "./packages/hooks/",\
           "packageDependencies": [\
             ["@wiggindev/hooks", "workspace:packages/hooks"],\
             ["@types/react", "npm:18.0.9"],\
+            ["@wiggindev/events", "workspace:packages/events"],\
             ["@wiggindev/utils", "workspace:packages/utils"],\
             ["eslint-plugin-react", "virtual:9cea0b2a752f75718066c16986dcfd9f75a79f4595aa3576077a68440cca0c967f9237f39bb5c443eb7294b83d3a3367792c27b124c962d32cab24e0e40179dd#npm:7.29.4"],\
             ["microbundle", "npm:0.15.0"],\

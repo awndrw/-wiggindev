@@ -1,4 +1,4 @@
-import { EventListener, EventName, DomEventListener } from './eventTypes';
+import type { EventListener, EventName, DomEventListener } from './eventTypes';
 
 export const on = <E extends EventName<WindowEventMap>>(
     event: E,

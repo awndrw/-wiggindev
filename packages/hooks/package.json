@@ -24,9 +24,10 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "build": "rm -rf dist && microbundle -f modern,esm,cjs",
-        "dev": "rm -rf dist && microbundle -f modern,esm,cjs watch"
+        "dev": "microbundle watch -f modern,esm,cjs"
     },
     "dependencies": {
+        "@wiggindev/events": "*",
         "@wiggindev/utils": "*"
     },
     "peerDependencies": {

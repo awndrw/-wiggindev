@@ -5,8 +5,8 @@
         "packages/*"
     ],
     "scripts": {
-        "build": "yarn workspace @wiggindev/utils run build && yarn workspace @wiggindev/hooks run build",
-        "dev": "yarn workspaces foreach run dev",
+        "build": ".bin/build.sh",
+        "dev": "yarn build && yarn workspaces foreach run dev",
         "postinstall": "husky install",
         "prepack": "pinst --disable",
         "postpack": "pinst --enable",

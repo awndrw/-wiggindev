@@ -2318,11 +2318,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@wiggindev/events@*, @wiggindev/events@workspace:packages/events":
+  version: 0.0.0-use.local
+  resolution: "@wiggindev/events@workspace:packages/events"
+  dependencies:
+    "@wiggindev/utils": "*"
+    microbundle: ^0.15.0
+  languageName: unknown
+  linkType: soft
+
 "@wiggindev/hooks@workspace:packages/hooks":
   version: 0.0.0-use.local
   resolution: "@wiggindev/hooks@workspace:packages/hooks"
   dependencies:
     "@types/react": ^18.0.9
+    "@wiggindev/events": "*"
     "@wiggindev/utils": "*"
     eslint-plugin-react: ^7.29.4
     microbundle: ^0.15.0

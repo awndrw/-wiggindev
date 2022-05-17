@@ -3,6 +3,10 @@ module.exports = {
     parser: '@typescript-eslint/parser',
     plugins: ['@typescript-eslint', 'prettier'],
     extends: ['eslint:recommended', 'prettier'],
+    env: {
+        browser: true,
+        node: true,
+    },
     rules: {
         'prefer-const': 'error',
         'no-unused-vars': 'off',
@@ -32,15 +36,5 @@ module.exports = {
                 '@typescript-eslint/no-var-requires': 'off',
             },
         },
-    ],
-    ignorePatterns: [
-        'node_modules',
-        '.fleet',
-        '.yarn',
-        '.idea',
-        '.next',
-        '.vercel',
-        'dist',
-        '.pnp.*',
     ],
 };
