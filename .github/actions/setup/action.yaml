@@ -15,6 +15,14 @@ runs:
               registry-url: ${{ inputs.registry-url }}
               cache: 'yarn'
 
+        - name: Check yarn version
+          run: yarn -v
+          shell: bash
+
         - name: Install Dependencies
           run: yarn install --immutable --immutable-cache
+          shell: bash
+
+        - name: Build
+          run: yarn build
           shell: bash
