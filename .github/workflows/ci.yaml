@@ -12,39 +12,55 @@ jobs:
             packages: ${{ steps.get-packages.outputs.packages }}
         steps:
             - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: '18.x'
+                  cache: 'yarn'
+            - run: corepack enable && yarn -v
+            - run: yarn install --immutable --immutable-cache --check-cache
             - id: get-packages
-              uses: ./.github/actions/get-packages
-
-    typecheck:
-        name: Typecheck
-        needs: install
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - uses: ./.github/actions/setup
-            - run: yarn typecheck
+              shell: python
+              run: |
+                  import os, json
+                  packages=os.listdir('packages')
+                  jsonPackages=json.dumps(packages)
+                  print(f'::set-output name=packages::{jsonPackages}')
+                  os.system('echo "## Packages Loaded" >> $GITHUB_STEP_SUMMARY')
+                  os.system('echo "" >> $GITHUB_STEP_SUMMARY')
+                  for package in packages:
+                      os.system(f'echo "- {package}" >> $GITHUB_STEP_SUMMARY')
 
     lint:
         name: Lint
-        needs: install
+        needs: [install]
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
             - uses: ./.github/actions/setup
-            - run: yarn link
+            - run: yarn lint
 
     test:
         name: Test
-        needs: install
+        needs: [install]
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
             - uses: ./.github/actions/setup
             - run: yarn test
 
+    typecheck:
+        name: Typecheck
+        needs: [install]
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: ./.github/actions/setup
+            - run: yarn build
+            - run: yarn typecheck
+
     build:
         name: Build
-        needs: install
+        needs: [install]
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
@@ -53,7 +69,7 @@ jobs:
 
     tag:
         name: Tag
-        needs: install
+        needs: [install]
         runs-on: ubuntu-latest
         strategy:
             matrix:

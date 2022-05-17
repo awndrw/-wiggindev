@@ -13,5 +13,5 @@
         "isolatedModules": true,
         "incremental": true
     },
-    "exclude": ["node_modules", ".fleet", ".yarn", ".idea", ".next", ".vercel"]
+    "exclude": ["node_modules", ".fleet", ".idea", ".next", ".vercel", "dist"]
 }
