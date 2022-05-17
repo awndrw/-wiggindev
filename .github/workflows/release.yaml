@@ -19,10 +19,6 @@ on:
                     - major
                 required: true
 
-env:
-    DIR: ${{ inputs.package }}
-    VERSION: ${{ inputs.version }}
-
 jobs:
     ci:
         uses: ./.github/workflows/ci.yaml
@@ -34,7 +30,7 @@ jobs:
         steps:
             - uses: actions/checkout@v3
             - uses: ./.github/actions/setup-node
-            - run: yarn workspace @wiggindev/$DIR version --$VERSION
+            - run: yarn workspace @wiggindev/${{ inputs.package }} version --${{ inputs.version }}
 
     create-tag:
         name: Create Tag
@@ -45,11 +41,11 @@ jobs:
             - uses: ./.github/actions/setup-node
             - id: get-version
               run: |
-                  version=jq '.version' ./packages/$DIR/package.json
+                  version=jq '.version' ./packages/${{ inputs.package }}/package.json
                   echo "::set-output name=version::{version}"
             - uses: rickstaa/action-create-tag@v1
               with:
-                  tag: $DIR_${{ steps.get-version.output.version }}
+                  tag: ${{ inputs.package }}_${{ steps.get-version.output.version }}
 
     publish:
         name: Publish
@@ -60,6 +56,6 @@ jobs:
             - uses: ./.github/actions/setup-node
               with:
                   registry-url: https://registry.npmjs.org
-            - run: yarn workspace @wiggindev/$DIR npm publish
+            - run: yarn workspace @wiggindev/${{ inputs.package }} npm publish
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
