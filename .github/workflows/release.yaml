@@ -1,0 +1,65 @@
+name: Release
+
+on:
+    workflow_dispatch:
+        inputs:
+            package:
+                type: choice
+                description: which package should be released
+                options:
+                    - hooks
+                    - utils
+                required: true
+            version:
+                type: choice
+                description: version release type
+                options:
+                    - patch
+                    - minor
+                    - major
+                required: true
+
+env:
+    DIR: ${{ inputs.package }}
+    VERSION: ${{ inputs.version }}
+
+jobs:
+    ci:
+        uses: .github/workflows/ci.yaml
+
+    bump-version:
+        name: Bump Version
+        needs: ci
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: ./.github/actions/setup-node
+            - run: yarn workspace @wiggindev/$DIR version --$VERSION
+
+    create-tag:
+        name: Create Tag
+        needs: ci
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: ./.github/actions/setup-node
+            - id: get-version
+              run: |
+                  version=jq '.version' ./packages/$DIR/package.json
+                  echo "::set-output name=version::{version}"
+            - uses: rickstaa/action-create-tag@v1
+              with:
+                  tag: $DIR_${{ steps.get-version.output.version }}
+
+    publish:
+        name: Publish
+        needs: [ci, bump-version, create-tag]
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: ./.github/actions/setup-node
+              with:
+                  registry-url: https://registry.npmjs.org
+            - run: yarn workspace @wiggindev/$DIR npm publish
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
