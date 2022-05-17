@@ -40,12 +40,13 @@ jobs:
             fail-fast: false
             matrix:
                 node-version: [14.x, 16.x, 18.x]
+                shard: ['1/2', '2/2']
         steps:
             - uses: actions/checkout@v3
             - uses: ./.github/actions/setup
               with:
                   node-version: ${{ matrix.node-version }}
-            - run: yarn test
+            - run: yarn test -- --shard ${{ matrix.shard }}
 
     build:
         name: Build
