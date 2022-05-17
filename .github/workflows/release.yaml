@@ -7,8 +7,8 @@ on:
                 type: choice
                 description: which package should be released
                 options:
-                    - hooks
                     - utils
+                    - hooks
                 required: true
             version:
                 type: choice
@@ -53,6 +53,8 @@ jobs:
             - uses: ./.github/actions/setup-node
               with:
                   registry-url: https://registry.npmjs.org
-            - run: yarn workspace $PACKAGE npm publish
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+            - uses: JS-DevTools/npm-publish@v1
+              with:
+                  token: ${{ secrets.NPM_TOKEN }}
+                  package: './packages/${{ github.event.inputs.package }}/package.json'
+                  access: public
