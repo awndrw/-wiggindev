@@ -21,7 +21,7 @@ on:
 
 env:
     DIR: ${{ github.event.inputs.package }}
-    PACKAGE: @wiggindev/${{ github.event.inputs.package }}
+    PACKAGE: '@wiggindev/${{ github.event.inputs.package }}'
     VERSION: ${{ github.event.inputs.version }}
 
 jobs:
