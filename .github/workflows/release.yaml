@@ -38,7 +38,7 @@ jobs:
 
     create-tag:
         name: Create Tag
-        needs: ci
+        needs: [ci, bump-version]
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
