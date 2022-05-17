@@ -71,17 +71,16 @@ jobs:
         needs: [install]
         runs-on: ubuntu-latest
         strategy:
+            fail-fast: false
             matrix:
-                package: ${{ fromJSON(needs.get-packages.outputs.packages) }}
+                package: ${{ fromJSON(needs.install.outputs.packages) }}
         outputs:
             publish: ${{ steps.status.outputs.publish }}
         steps:
-            - name: Checkout
-              uses: actions/checkout@v3
+            - uses: actions/checkout@v3
               with:
                   fetch-depth: 2
-            - name: Tag commit if version has changed
-              id: tag
+            - id: tag
               uses: salsify/action-detect-and-tag-new-version@v2
               with:
                   tag-template: ${{ matrix.package }}/v{{VERSION}}
@@ -96,7 +95,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                package: ${{ fromJSON(needs.get-packages.outputs.packages) }}
+                package: ${{ fromJSON(needs.install.outputs.packages) }}
         steps:
             - uses: actions/checkout@v3
             - uses: ./.github/actions/setup
@@ -113,7 +112,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                package: ${{ fromJSON(needs.get-packages.outputs.packages) }}
+                package: ${{ fromJSON(needs.install.outputs.packages) }}
         steps:
             - uses: actions/checkout@v3
             - uses: ./.github/actions/setup
