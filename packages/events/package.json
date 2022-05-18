@@ -30,7 +30,7 @@
         "clean": "rm -rf dist",
         "build": "yarn clean && microbundle",
         "dev": "microbundle watch",
-        "postinstall": "yarn build"
+        "prepack": "yarn build"
     },
     "dependencies": {
         "@wiggindev/utils": "*"

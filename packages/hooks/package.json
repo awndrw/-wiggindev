@@ -30,7 +30,7 @@
         "clean": "rm -rf dist",
         "build": "yarn clean && microbundle -f modern,esm,cjs",
         "dev": "microbundle watch -f modern,esm,cjs",
-        "postinstall": "yarn build"
+        "prepack": "yarn build"
     },
     "dependencies": {
         "@wiggindev/events": "*",
