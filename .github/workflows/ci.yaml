@@ -12,6 +12,7 @@ jobs:
         steps:
             - uses: actions/checkout@v3
             - uses: ./.github/actions/setup-node
+            - run: yarn build
             - run: yarn install --immutable --immutable-cache --check-cache
 
     lint:
