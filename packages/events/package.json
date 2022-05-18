@@ -12,6 +12,10 @@
         "url": "https://github.com/wiggindev/-wiggindev.git",
         "directory": "packages/events"
     },
+    "files": [
+        "dist",
+        "README.md"
+    ],
     "type": "module",
     "source": "src/index.ts",
     "exports": {
@@ -23,7 +27,8 @@
     "unpkg": "dist/index.umd.js",
     "types": "dist/index.d.ts",
     "scripts": {
-        "build": "rm -rf dist && microbundle",
+        "clean": "rm -rf dist",
+        "build": "yarn clean && microbundle",
         "dev": "microbundle watch"
     },
     "dependencies": {
