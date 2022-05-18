@@ -42,7 +42,7 @@ jobs:
                   git config user.name "@wiggindev CI"
                   git config user.email "<>"
                   git add ./packages/${{ github.event.inputs.package }}/package.json
-                  git commit -m "Bump ${{ github.event.inputs.package }} to ${{ steps.get-version.outputs.current-version }}"
+                  git commit -n -m "Bump ${{ github.event.inputs.package }} to ${{ steps.get-version.outputs.current-version }}"
                   git push -u origin ${{ github.ref_name }}
             - uses: rickstaa/action-create-tag@v1
               with:
