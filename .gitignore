@@ -1,4 +1,5 @@
 dist
+.github/**/*.bak
 
 ### YARN ###
 .yarn/*
