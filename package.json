@@ -8,7 +8,7 @@
         "build": "wsrun -s -m build",
         "dev": "yarn build && yarn workspaces foreach run dev",
         "postinstall": "husky install",
-        "prepack": "yarn build && pinst --disable",
+        "prepack": "pinst --disable",
         "postpack": "pinst --enable",
         "typecheck": "tsc --noEmit",
         "lint": "eslint .",

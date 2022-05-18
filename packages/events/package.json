@@ -29,7 +29,8 @@
     "scripts": {
         "clean": "rm -rf dist",
         "build": "yarn clean && microbundle",
-        "dev": "microbundle watch"
+        "dev": "microbundle watch",
+        "postinstall": "yarn build"
     },
     "dependencies": {
         "@wiggindev/utils": "*"
